@@ -16,15 +16,11 @@ object CodeGenerator {
         fileWriter.close()
     }
 
-    private fun dependOnLibrary(code: String): String {
-        return "#include <stdio.h>\n\n$code"
-    }
-
     fun write(fileName: String, code: String) {
         val currentPath = File(".").absoluteFile.parent
         try {
             init("$currentPath/src/out/$fileName")
-            fileWriter.write(dependOnLibrary(code))
+            fileWriter.write(code)
             close()
         } catch (e: Exception) {
             e.printStackTrace()

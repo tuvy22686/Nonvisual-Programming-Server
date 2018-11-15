@@ -1,5 +1,5 @@
 import util.CodeGenerator
-import util.JsonToCode
+import util.JsonTranslator
 import java.io.*
 import java.net.Socket
 
@@ -23,9 +23,10 @@ class ConnectToClient(private val socket: Socket, private val id: Int): Thread()
 
             val receivedData = bufferedReader.readLine()
 //            println(receivedData)
-//            println(Gson().fromJson<Block>(receivedData, Block::class.java))
-            println(JsonToCode.run(receivedData))
-            CodeGenerator.write(fileName = "hello.c", code = JsonToCode.run(receivedData))
+//            println(Gson().fromJson<SubBlock>(receivedData, SubBlock::class.java))
+            println(JsonTranslator.toCode(receivedData))
+            val dataClass = JsonTranslator.toBlock(receivedData)
+            CodeGenerator.write(fileName = dataClass.fileName , code = JsonTranslator.toCode(receivedData))
 
             printWriter.println("[From Server] Received data is {$receivedData}")
             printWriter.flush()

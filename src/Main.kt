@@ -1,5 +1,3 @@
-import com.google.gson.Gson
-import model.Block
 import util.Constant
 import java.net.InetSocketAddress
 import java.net.ServerSocket
@@ -30,14 +28,14 @@ fun main(args: Array<String>) {
 //    ExecuteShellScript.gcc("hello")
 //    ExecuteShellScript.exec("hello")
 
-//    val test1 = Block(id = 0, functionName = "printf", arguments = listOf("Hello World"), children = listOf(null))
-//    val test2 = Block(id = 1, functionName = "if", arguments = listOf("a == 0"), children = listOf(test1))
+//    val test1 = SubBlock(id = 0, functionName = "printf", arguments = listOf("Hello World"), children = listOf(null))
+//    val test2 = SubBlock(id = 1, functionName = "if", arguments = listOf("a == 0"), children = listOf(test1))
 //
 //    val mockJson = Gson().toJson(test2)
 //
 //    println(mockJson)
 //
-//    val test3 = Gson().fromJson<Block>(mockJson, Block::class.java)
+//    val test3 = Gson().fromJson<SubBlock>(mockJson, SubBlock::class.java)
 //
 //    println(test3)
 }

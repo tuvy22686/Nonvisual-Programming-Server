@@ -1,17 +1,24 @@
 {
-  "id": 1,
-  "arguments": [
-    "a \u003d\u003d 0"
-  ],
-  "children": [
+  "userId": 0,
+  "fileName": "hello.c",
+  "subBlocks": [
     {
-      "id": 0,
-      "functionName": "println",
+      "id": 1,
+      "functionName": "if",
       "arguments": [
-        "Hello World"
+        "true"
       ],
       "children": [
-        null
+        {
+          "id": 0,
+          "functionName": "printf",
+          "arguments": [
+            "\"Hello World\""
+          ],
+          "children": [
+            null
+          ]
+        }
       ]
     }
   ]
