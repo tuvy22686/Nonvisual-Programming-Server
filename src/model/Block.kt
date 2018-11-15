@@ -6,9 +6,10 @@ import java.lang.StringBuilder
 data class Block(val id: Int, val functionName: String, val arguments: List<String>?, val children: List<Block>?) {
 
     enum class Function(val id: Int?) {
-        Print(0),
-        If(1),
-        While(2)
+        Main(0),
+        Print(1),
+        If(2),
+        While(3)
     }
 
     fun toCode(): String {

@@ -4,9 +4,10 @@ object ClassificationOfFunction {
 
     fun idToString(id: Int): String {
         return when (id) {
-            0 -> { "printf" }
-            1 -> { "if" }
-            2 -> { "while" }
+            0 -> { "main" }
+            1 -> { "printf" }
+            2 -> { "if" }
+            3 -> { "while" }
             else -> { "irregular" }
         }
     }
