@@ -1,3 +1,4 @@
+import model.OutputResult
 import util.CodeGenerator
 import util.ExecuteShellScript
 import util.JsonTranslator
@@ -26,10 +27,12 @@ class ConnectToClient(private val socket: Socket, private val id: Int): Thread()
             val dataClass = JsonTranslator.toBlock(receivedData)
             CodeGenerator.write(fileName = dataClass.fileName , code = JsonTranslator.toCode(receivedData))
 
-            ExecuteShellScript.gcc(fileName = dataClass.fileName)
-            ExecuteShellScript.exec(fileName = dataClass.fileName)
+            val outputResult = OutputResult(
+                    ExecuteShellScript.gcc(fileName = dataClass.fileName),
+                    ExecuteShellScript.exec(fileName = dataClass.fileName)
+            )
 
-            printWriter.println("[From Server] Received data is {$receivedData}")
+            printWriter.println(JsonTranslator.toJson(outputResult))
             printWriter.flush()
         } catch (e: Exception) {
             e.printStackTrace()

@@ -1,5 +1,7 @@
 package util
 
+import model.ExecResult
+import model.GccResult
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -12,8 +14,8 @@ object ExecuteShellScript {
     private lateinit var standardReader: BufferedReader
     private lateinit var errorReader: BufferedReader
 
-    fun gcc(fileName: String) {
-        try {
+    fun gcc(fileName: String): GccResult {
+        return try {
             val filePath = File(".").absoluteFile.parent
             val process = ProcessBuilder("sh", "$filePath/src/shell/gcc.sh", filePath, fileName).start()
             init(process)
@@ -38,17 +40,27 @@ object ExecuteShellScript {
             println("-------------------------------")
 
             close()
+
+            GccResult(standard = standardBuilder.toString(),
+                    error = errorBuilder.toString(),
+                    returnCode = process.waitFor())
         } catch (e: IOException) {
             e.printStackTrace()
             close()
+            GccResult(standard = null,
+                    error = null,
+                    returnCode = null)
         } catch (e: InterruptedException) {
             e.printStackTrace()
             close()
+            GccResult(standard = null,
+                    error = null,
+                    returnCode = null)
         }
     }
 
-    fun exec(fileName: String) {
-        try {
+    fun exec(fileName: String): ExecResult {
+        return try {
             val filePath = File(".").absoluteFile.parent
             val process = ProcessBuilder("sh", "$filePath/src/shell/exec.sh", filePath, fileName).start()
             init(process)
@@ -73,12 +85,22 @@ object ExecuteShellScript {
             println("-------------------------------")
 
             close()
+
+            ExecResult(standard = standardBuilder.toString(),
+                    error = errorBuilder.toString(),
+                    returnCode = process.waitFor())
         } catch (e: IOException) {
             e.printStackTrace()
             close()
+            ExecResult(standard = null,
+                    error = null,
+                    returnCode = null)
         } catch (e: InterruptedException) {
             e.printStackTrace()
             close()
+            ExecResult(standard = null,
+                    error = null,
+                    returnCode = null)
         }
     }
 

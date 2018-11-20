@@ -14,7 +14,7 @@ data class MainBlock(val userId: Long, val fileName: String, val subBlocks: List
             ch.append("${subBlocks[cnt].toCode()}\n")
             cnt++
         }
-        ch.append("return 0\n}")
+        ch.append("return 0;\n}")
 
         return lib + fc + arg + ch.toString()
     }
