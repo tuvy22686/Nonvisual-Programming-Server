@@ -19,7 +19,7 @@ object CodeGenerator {
     fun write(fileName: String, code: String) {
         val currentPath = File(".").absoluteFile.parent
         try {
-            init("$currentPath/src/out/$fileName")
+            init("$currentPath/src/out/$fileName.c")
             fileWriter.write(code)
             close()
         } catch (e: Exception) {

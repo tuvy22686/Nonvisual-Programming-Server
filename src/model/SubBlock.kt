@@ -7,12 +7,9 @@ data class SubBlock(val id: Int, val functionName: String, val arguments: List<S
 
     fun toCode(): String {
         // 関数名
-//        println("id: $id")
         val fc = ClassificationOfFunction.idToString(id)
-//        println("functionName: $head")
 
         // 引数
-//        println("arguments: $arguments")
         var cnt = 0
         val arg = StringBuilder()
         arg.append("(")
@@ -24,10 +21,8 @@ data class SubBlock(val id: Int, val functionName: String, val arguments: List<S
             cnt++
         }
         arg.append(")")
-//        println("concatenated argument: $arg")
 
         // 中括弧中身連結
-//        println("children: $children")
         cnt = 0
         val ch = StringBuilder()
         while (children?.getOrNull(cnt) != null) {
@@ -42,8 +37,6 @@ data class SubBlock(val id: Int, val functionName: String, val arguments: List<S
         } else {
             ch.append(";")
         }
-
-//        println("block: $ch")
 
         return fc + arg.toString() + ch.toString()
     }
