@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-kill -9 $(cat out/nvisual.pid)
+fuser -kvn tcp 12345
 rm out/nvisual.pid
