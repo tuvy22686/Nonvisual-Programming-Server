@@ -4,4 +4,7 @@
 - `$ ./Nonvisual-Programming-Server/build.sh`
 
 ## Run
-- `$ kotlin /Nonvisual-Programming-Server/out/app.jar`
+- `$ ./Nonvisual-Programming-Server/start.sh`
+
+## Stop
+- `$ ./Nonvisual-Programming-Server/stop.sh`
