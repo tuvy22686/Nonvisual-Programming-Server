@@ -2,4 +2,4 @@
 
 if [ ! -e out/ ]; then mkdir out/ ; fi
 if [ ! -e src/out/ ]; then mkdir src/out/ ; fi
-kotlinc-jvm -classpath lib/*.jar -include-runtime src/ -d out/app.jar
+kotlinc-jvm -classpath lib/gson-2.8.5.jar -include-runtime src/ -d out/app.jar
