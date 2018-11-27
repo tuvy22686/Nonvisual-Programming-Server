@@ -17,7 +17,14 @@ object ExecuteShellScript {
     fun gcc(fileName: String): GccResult {
         return try {
             val filePath = File(".").absoluteFile.parent
-            val process = ProcessBuilder("sh", "$filePath/src/shell/gcc.sh", filePath, fileName).start()
+            val command = arrayListOf(
+                    "gcc",
+                    "$filePath/src/out/$fileName.c",
+                    "-o",
+                    "$filePath/src/out/$fileName.exe",
+                    "-Wall"
+            )
+            val process = ProcessBuilder(command).start()
             init(process)
 
             val standardBuilder = StringBuilder()
