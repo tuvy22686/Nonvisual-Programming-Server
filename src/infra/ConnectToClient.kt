@@ -1,3 +1,5 @@
+package infra
+
 import model.OutputResult
 import util.CodeGenerator
 import util.ExecuteShellScript
