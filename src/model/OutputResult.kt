@@ -1,3 +1,3 @@
 package model
 
-data class OutputResult(val gccResult: GccResult, val execResult: ExecResult)
+data class OutputResult(val compileResult: CompileResult, val executionResult: ExecutionResult)
