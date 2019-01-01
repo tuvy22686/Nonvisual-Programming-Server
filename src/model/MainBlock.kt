@@ -1,6 +1,6 @@
 package model
 
-data class MainBlock(val userId: Long, val fileName: String, val subBlocks: List<SubBlock>): Block() {
+data class MainBlock(val userId: Long, val languageType: Int, val fileName: String, val subBlocks: List<SubBlock>): Block() {
 
     fun toCode(): String {
         val lib = "#include <stdio.h>\n\n"
