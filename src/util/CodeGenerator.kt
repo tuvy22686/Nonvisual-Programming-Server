@@ -8,18 +8,23 @@ object CodeGenerator {
 
     private lateinit var fileWriter: FileWriter
 
-    private fun init(filePath: String) {
-        fileWriter = FileWriter(filePath)
+    private fun init(languageType: Int, filePath: String) {
+        val extension = when (languageType) {
+            0 -> { ".c" }
+            1 -> { ".java" }
+            else -> { "" }
+        }
+        fileWriter = FileWriter("$filePath$extension")
     }
 
     private fun close() {
         fileWriter.close()
     }
 
-    fun write(fileName: String, code: String) {
+    fun write(languageType: Int, fileName: String, code: String) {
         val currentPath = File(".").absoluteFile.parent
         try {
-            init("$currentPath/src/out/$fileName.c")
+            init(languageType, "$currentPath/src/out/$fileName")
             fileWriter.write(code)
             close()
         } catch (e: Exception) {

@@ -8,7 +8,12 @@ object JsonTranslator {
 
     fun toCode(jsonData: String): String {
         val mainBlock = Gson().fromJson<MainBlock>(jsonData, MainBlock::class.java)
-        return mainBlock.toCode()
+
+        return when (mainBlock.languageType) {
+            0 -> { mainBlock.toCCode() }
+            1 -> { mainBlock.toJavaCode(mainBlock.fileName) }
+            else -> { "error" }
+        }
     }
 
     fun toBlock(jsonData: String): MainBlock {

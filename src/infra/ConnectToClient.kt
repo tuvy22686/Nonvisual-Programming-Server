@@ -27,11 +27,11 @@ class ConnectToClient(private val socket: Socket, private val id: Int): Thread()
 
             val receivedData = bufferedReader.readLine()
             val dataClass = JsonTranslator.toBlock(receivedData)
-            CodeGenerator.write(fileName = dataClass.fileName , code = JsonTranslator.toCode(receivedData))
+            CodeGenerator.write(languageType = dataClass.languageType, fileName = dataClass.fileName , code = JsonTranslator.toCode(receivedData))
 
             val outputResult = OutputResult(
-                    ExecuteShellScript.gcc(fileName = dataClass.fileName),
-                    ExecuteShellScript.exec(fileName = dataClass.fileName)
+                    ExecuteShellScript.compile(languageType = dataClass.languageType, fileName = dataClass.fileName),
+                    ExecuteShellScript.execution(languageType = dataClass.languageType, fileName = dataClass.fileName)
             )
 
             printWriter.println(JsonTranslator.toJson(outputResult))
