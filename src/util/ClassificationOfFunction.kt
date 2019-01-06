@@ -37,6 +37,7 @@ object ClassificationOfFunction {
                 "{$stringBuilder}"
             }
             6 -> { "new int[${values.first()}]" }
+            8 -> { "new HashMap<>()" }
             else -> { values.first() }
         }
     }

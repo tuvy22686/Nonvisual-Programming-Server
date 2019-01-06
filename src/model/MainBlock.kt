@@ -20,6 +20,10 @@ data class MainBlock(val userId: Long, val languageType: Int, val fileName: Stri
     }
 
     fun toJavaCode(className: String): String {
+        val lib =
+                "import java.util.HashMap;\n" +
+                "import java.util.Map;\n" +
+                "\n"
         val fc = "public class $className {\npublic static void main"
         val arg = "(String[] args)"
 
@@ -32,6 +36,6 @@ data class MainBlock(val userId: Long, val languageType: Int, val fileName: Stri
         }
         ch.append("}\n}")
 
-        return fc + arg + ch.toString()
+        return lib + fc + arg + ch.toString()
     }
 }

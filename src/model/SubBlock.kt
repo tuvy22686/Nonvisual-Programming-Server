@@ -69,7 +69,7 @@ data class SubBlock(val id: Int, val functionName: String, val valueName: String
             val arg = StringBuilder()
             arg.append("(")
             while (arguments?.getOrNull(cnt) != null) {
-                if (cnt > 1) {
+                if (cnt > 0) {
                     arg.append(",")
                 }
                 arg.append(arguments[cnt])
