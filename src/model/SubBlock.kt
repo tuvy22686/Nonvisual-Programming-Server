@@ -1,83 +1,114 @@
 package model
 
 import util.ClassificationOfFunction
+import util.ValueList
 import java.lang.StringBuilder
 
-data class SubBlock(val id: Int, val functionName: String, val arguments: List<String>?, val children: List<SubBlock>?): Block() {
+data class SubBlock(val id: Int, val functionName: String, val valueName: String?, val values: List<String?>, val arguments: List<String>?, val children: List<SubBlock>?): Block() {
 
     fun toCCode(): String {
-        // 関数名
-        val fc = ClassificationOfFunction.idToCCode(id)
+        if (valueName.isNullOrEmpty()) {
+            // 関数名
+            val fc = ClassificationOfFunction.idToCCode(id, functionName)
 
-        // 引数
-        var cnt = 0
-        val arg = StringBuilder()
-        arg.append("(")
-        while (arguments?.getOrNull(cnt) != null) {
-            if (cnt > 1) {
-                arg.append(",")
+            // 引数
+            var cnt = 0
+            val arg = StringBuilder()
+            arg.append("(")
+            while (arguments?.getOrNull(cnt) != null) {
+                if (cnt > 1) {
+                    arg.append(",")
+                }
+                arg.append(arguments[cnt])
+                cnt++
             }
-            arg.append(arguments[cnt])
-            cnt++
-        }
-        arg.append(")")
+            arg.append(")")
 
-        // 中括弧中身連結
-        cnt = 0
-        val ch = StringBuilder()
-        while (children?.getOrNull(cnt) != null) {
-            if (cnt == 0) {
-                ch.append("{\n")
+            // 中括弧中身連結
+            cnt = 0
+            val ch = StringBuilder()
+            while (children?.getOrNull(cnt) != null) {
+                if (cnt == 0) {
+                    ch.append("{\n")
+                }
+                ch.append("${children[cnt].toCCode()}\n")
+                cnt++
             }
-            ch.append("${children[cnt].toCCode()}\n")
-            cnt++
-        }
 
-        // end character
-        if (ch.isNotEmpty()) {
-            ch.append("}\n")
+            // end character
+            if (ch.isNotEmpty()) {
+                ch.append("}\n")
+            } else {
+                ch.append(";")
+            }
+
+            return fc + arg.toString() + ch.toString()
         } else {
-            ch.append(";")
-        }
+            // 変数型
+            val valueType: String =
+                    if (ValueList.register(valueName!!)) {
+                        "$functionName "
+                    } else {
+                        ""
+                    }
 
-        return fc + arg.toString() + ch.toString()
+            // 値
+            val v = ClassificationOfFunction.idToTypeCode(id, values.filterNotNull())
+
+            return "$valueType$valueName=$v;"
+        }
     }
 
     fun toJavaCode(): String {
-        // function
-        val fc = ClassificationOfFunction.idToJavaCode(id)
+        if (valueName.isNullOrEmpty()) {
+            // function
+            val fc = ClassificationOfFunction.idToJavaCode(id, functionName)
 
-        // argument
-        var cnt = 0
-        val arg = StringBuilder()
-        arg.append("(")
-        while (arguments?.getOrNull(cnt) != null) {
-            if (cnt > 1) {
-                arg.append(",")
+            // argument
+            var cnt = 0
+            val arg = StringBuilder()
+            arg.append("(")
+            while (arguments?.getOrNull(cnt) != null) {
+                if (cnt > 1) {
+                    arg.append(",")
+                }
+                arg.append(arguments[cnt])
+                cnt++
             }
-            arg.append(arguments[cnt])
-            cnt++
-        }
-        arg.append(")")
+            arg.append(")")
 
-        // brace
-        cnt = 0
-        val ch = StringBuilder()
-        while (children?.getOrNull(cnt) != null) {
-            if (cnt == 0) {
-                ch.append("{\n")
+            // brace
+            cnt = 0
+            val ch = StringBuilder()
+            while (children?.getOrNull(cnt) != null) {
+                if (cnt == 0) {
+                    ch.append("{\n")
+                }
+                ch.append("${children[cnt].toJavaCode()}\n")
+                cnt++
             }
-            ch.append("${children[cnt].toJavaCode()}\n")
-            cnt++
-        }
 
-        // end character
-        if (ch.isNotEmpty()) {
-            ch.append("}\n")
+            // end character
+            if (ch.isNotEmpty()) {
+                ch.append("}\n")
+            } else {
+                ch.append(";")
+            }
+
+            return fc + arg.toString() + ch.toString()
         } else {
-            ch.append(";")
-        }
+            // Type
+            val valueType: String =
+                    if (ValueList.register(valueName!!)) {
+                        "$functionName "
+                    } else {
+                        ""
+                    }
 
-        return fc + arg.toString() + ch.toString()
+            // Value
+            val v = ClassificationOfFunction.idToTypeCode(id, values.filterNotNull())
+
+            return "$valueType$valueName=$v;"
+        }
     }
 }

@@ -31,7 +31,7 @@ class ConnectToClient(private val socket: Socket, private val id: Int): Thread()
 
             val outputResult = OutputResult(
                     ExecuteShellScript.compile(languageType = dataClass.languageType, fileName = dataClass.fileName),
-                    ExecuteShellScript.execution(languageType = dataClass.languageType, fileName = dataClass.fileName)
+                    ExecuteShellScript.execute(languageType = dataClass.languageType, fileName = dataClass.fileName)
             )
 
             printWriter.println(JsonTranslator.toJson(outputResult))
@@ -46,6 +46,7 @@ class ConnectToClient(private val socket: Socket, private val id: Int): Thread()
             }
         }
         println("Bye ID: $id")
+        ExecuteShellScript.deleteFile()
     }
 
     private fun close() {

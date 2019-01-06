@@ -14,10 +14,10 @@ object CodeGenerator {
             1 -> { ".java" }
             else -> { "" }
         }
-        fileWriter = FileWriter("$filePath$extension")
+        fileWriter = FileWriter("$filePath$extension", false)
     }
 
-    private fun close() {
+    private fun writerClose() {
         fileWriter.close()
     }
 
@@ -26,10 +26,10 @@ object CodeGenerator {
         try {
             init(languageType, "$currentPath/src/out/$fileName")
             fileWriter.write(code)
-            close()
+            writerClose()
         } catch (e: Exception) {
             e.printStackTrace()
-            close()
+            writerClose()
         }
     }
 }

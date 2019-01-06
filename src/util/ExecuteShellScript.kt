@@ -22,12 +22,18 @@ object ExecuteShellScript {
         }
     }
 
-    fun execution(languageType: Int, fileName: String): ExecutionResult {
+    fun execute(languageType: Int, fileName: String): ExecutionResult {
         return when (languageType) {
             0 -> { exec(fileName) }
             1 -> { java(fileName) }
             else -> { ExecutionResult.ofError() }
         }
+    }
+
+    fun deleteFile() {
+        val filePath = File(".").absoluteFile.parent
+        val file = File("$filePath/src/out/value.master")
+        file.delete()
     }
 
     private fun gcc(fileName: String): CompileResult {
