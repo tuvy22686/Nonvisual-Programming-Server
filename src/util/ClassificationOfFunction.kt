@@ -36,9 +36,7 @@ object ClassificationOfFunction {
                 }
                 "{$stringBuilder}"
             }
-            6 -> {
-                "new int[${values.first()}]"
-            }
+            6 -> { "new int[${values.first()}]" }
             else -> { values.first() }
         }
     }
