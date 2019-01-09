@@ -3,6 +3,7 @@ package infra
 import model.OutputResult
 import util.CodeGenerator
 import util.ExecuteShellScript
+import util.JsonData
 import util.JsonTranslator
 import java.io.*
 import java.net.Socket
@@ -27,9 +28,14 @@ class ConnectToClient(private val socket: Socket, private val id: Int): Thread()
 
             val receivedData = bufferedReader.readLine()
             val dataClass = JsonTranslator.toBlock(receivedData)
+
+            // Jsonファイル保存
+            JsonData.write(receivedData, dataClass.fileName)
+
             CodeGenerator.write(languageType = dataClass.languageType, fileName = dataClass.fileName , code = JsonTranslator.toCode(receivedData))
 
             val outputResult = OutputResult(
+                    JsonData.read(dataClass.fileName),
                     ExecuteShellScript.compile(languageType = dataClass.languageType, fileName = dataClass.fileName),
                     ExecuteShellScript.execute(languageType = dataClass.languageType, fileName = dataClass.fileName)
             )

@@ -1,3 +1,3 @@
 package model
 
-data class OutputResult(val compileResult: CompileResult, val executionResult: ExecutionResult)
+data class OutputResult(val jsonData: String?, val compileResult: CompileResult, val executionResult: ExecutionResult)
