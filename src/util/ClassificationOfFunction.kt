@@ -24,8 +24,7 @@ object ClassificationOfFunction {
 
     fun idToTypeCode(id: Int, values: List<String>): String {
         return when (id) {
-            3 -> { values.first() }
-            4 -> { "\"${values.first()}\"" }
+            3, 4 -> { values.first() }
             5 -> {
                 val stringBuilder = StringBuilder()
                 stringBuilder.append(values.first())
